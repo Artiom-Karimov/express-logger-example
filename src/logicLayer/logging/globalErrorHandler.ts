@@ -1,5 +1,4 @@
 import ILogger from "./logger"
-import { MessageLevel } from "./messageModel"
 
 export default class GlobalErrorHandler {
     constructor(private readonly logger:ILogger) {
@@ -7,6 +6,6 @@ export default class GlobalErrorHandler {
         process.on('unhandledRejection', (error: Error) => this.handleError(error))
     }
     public handleError = (error:Error) => {
-        this.logger.log(`${error.name}: ${error.message}`,MessageLevel.Error)
+        this.logger.error(error)
     }
 }

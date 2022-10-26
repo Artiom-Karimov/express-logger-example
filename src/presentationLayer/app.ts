@@ -16,7 +16,8 @@ export default class App {
     constructor(params: AppConstructorParams) {
         const app = express()
         this.server = http.createServer(app)
-        if(params.testRouter) app.use('/test', params.testRouter.getRouter())
+
+        if(params.testRouter) app.use('', params.testRouter.getRouter())
     }
 
     public start = async () => {

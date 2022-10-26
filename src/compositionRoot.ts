@@ -7,18 +7,18 @@ import TestRouter from "./presentationLayer/testRouter";
 
 
 export default class CompositionRoot {
-    private readonly logRepo:LogRepository
-    private readonly logger: ILogger
-    private readonly errorHandler: GlobalErrorHandler
+    public readonly logRepo:LogRepository
+    public readonly logger: ILogger
+    public readonly errorHandler: GlobalErrorHandler
 
-    private readonly testRouter: TestRouter
-    private readonly app: App
+    public readonly testRouter: TestRouter
+    public readonly app: App
 
     constructor(private readonly db:Db) {
         this.logRepo = new LogRepository(this.db)
         this.logger = new Logger(this.logRepo)
         this.errorHandler = new GlobalErrorHandler(this.logger)
-        this.testRouter = new TestRouter()
+        this.testRouter = new TestRouter(this.logRepo)
         this.app = new App({testRouter:this.testRouter})
     } 
 
