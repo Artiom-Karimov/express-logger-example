@@ -12,7 +12,7 @@ export default class LogRepository {
     }
     public get = async (limit:number = 10): Promise<MessageModel[]> => {
         try {
-            const result = await this.logs.find({}).sort('createdAt', 1).limit(limit).toArray()
+            const result = await this.logs.find({}).sort('timestamp', -1).limit(limit).toArray()
             return result.map(msg => MessageModel.copy(msg))
         } catch (error) {
             return []

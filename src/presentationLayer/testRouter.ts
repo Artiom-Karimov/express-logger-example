@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import IRouter from "./router";
 import * as config from '../config/config'
 import LogRepository from "../dataLayer/logRepository";
+import MessageFormatter from "./messageFormatter";
 
 export default class TestRouter implements IRouter {
     private readonly router = Router()
@@ -22,8 +23,9 @@ export default class TestRouter implements IRouter {
             res.status(200).send(`<h3>Nice. Now <a href="http://localhost:${config.port}/list">check error list</a></h3>`)
             throw new Error('whoops!')
         })
-        this.router.get('/list', async (req:Request,res:Response) => {            
-            res.status(200).send(await this.repo.get())
+        this.router.get('/list', async (req:Request,res:Response) => {  
+            const messages = await this.repo.get()       
+            res.status(200).send(MessageFormatter.format(messages))
         })
     }
 }
